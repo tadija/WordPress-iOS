@@ -14,4 +14,6 @@ struct GroupedViewData {
     let lowerRightValue: Int
 
     let statsURL: URL?
+
+    let lastUpdateText: String
 }

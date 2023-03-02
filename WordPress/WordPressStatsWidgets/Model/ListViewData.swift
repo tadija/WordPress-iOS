@@ -7,4 +7,6 @@ struct ListViewData {
     let items: [ThisWeekWidgetDay]
 
     let statsURL: URL?
+
+    let lastUpdateText: String
 }

@@ -12,6 +12,12 @@ struct SingleStatView: View {
 
                 Spacer()
                 VerticalCard(title: viewData.upperLeftTitle, value: viewData.upperLeftValue, largeText: true)
+
+                Spacer()
+                /// - TODO: refactor into a separate view?
+                Text(viewData.lastUpdateText)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
             Spacer()
         }

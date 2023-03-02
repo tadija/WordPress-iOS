@@ -23,15 +23,21 @@ struct ListStatsView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             FlexibleCard(axis: .horizontal, title: viewData.widgetTitle, value: .description(viewData.siteName))
                 .padding(.bottom, Constants.titleBottomPadding)
+
             ForEach(Array(displayData.enumerated()), id: \.element) { index, item in
                 ListRow(date: item.date, percentValue: item.dailyChangePercent, value: item.viewsCount)
                 if index != displayData.count - 1 {
                     Divider().padding(.top, 0)
                 }
             }
+
+            Spacer()
+            Text(viewData.lastUpdateText)
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
     }
 }

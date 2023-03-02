@@ -65,7 +65,8 @@ private extension StatsWidgetsView {
                                    lowerLeftValue: todayWidgetData.stats.likes,
                                    lowerRightTitle: LocalizableStrings.commentsTitle,
                                    lowerRightValue: todayWidgetData.stats.comments,
-                                   statsURL: todayWidgetData.statsURL)
+                                   statsURL: todayWidgetData.statsURL,
+                                   lastUpdateText: todayWidgetData.lastUpdateText)
         }
 
         if let allTimeWidgetData = widgetData as? HomeWidgetAllTimeData {
@@ -80,7 +81,8 @@ private extension StatsWidgetsView {
                                    lowerLeftValue: allTimeWidgetData.stats.posts,
                                    lowerRightTitle: LocalizableStrings.bestViewsTitle,
                                    lowerRightValue: allTimeWidgetData.stats.bestViews,
-                                   statsURL: allTimeWidgetData.statsURL)
+                                   statsURL: allTimeWidgetData.statsURL,
+                                   lastUpdateText: allTimeWidgetData.lastUpdateText)
         }
         return nil
     }
@@ -92,7 +94,8 @@ private extension StatsWidgetsView {
         return ListViewData(widgetTitle: LocalizableStrings.thisWeekWidgetTitle,
                             siteName: thisWeekWidgetData.siteName,
                             items: thisWeekWidgetData.stats.days,
-                            statsURL: thisWeekWidgetData.statsURL)
+                            statsURL: thisWeekWidgetData.statsURL,
+                            lastUpdateText: thisWeekWidgetData.lastUpdateText)
     }
 }
 

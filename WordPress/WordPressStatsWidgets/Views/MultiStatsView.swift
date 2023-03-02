@@ -8,6 +8,7 @@
             FlexibleCard(axis: .horizontal,
                          title: viewData.widgetTitle,
                          value: .description(viewData.siteName))
+
             Spacer()
             HStack {
                 makeColumn(upperTitle: viewData.upperLeftTitle,
@@ -22,6 +23,11 @@
                            lowerValue: viewData.lowerRightValue)
                 Spacer()
             }
+
+            Spacer()
+            Text(viewData.lastUpdateText)
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
     }
 
