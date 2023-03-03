@@ -25,7 +25,7 @@ struct ListStatsView: View {
     var body: some View {
         VStack(alignment: .leading) {
             FlexibleCard(axis: .horizontal, title: viewData.widgetTitle, value: .description(viewData.siteName))
-                .padding(.bottom, Constants.titleBottomPadding)
+                .padding(.bottom, Constants.verticalPadding)
 
             ForEach(Array(displayData.enumerated()), id: \.element) { index, item in
                 ListRow(date: item.date, percentValue: item.dailyChangePercent, value: item.viewsCount)
@@ -34,10 +34,8 @@ struct ListStatsView: View {
                 }
             }
 
-            Spacer()
-            Text(viewData.lastUpdateText)
-                .font(.caption)
-                .foregroundColor(.secondary)
+            LastUpdateIndicator(lastUpdate: viewData.lastUpdate)
+                .padding(.top, Constants.verticalPadding)
         }
     }
 }
@@ -47,6 +45,6 @@ private extension ListStatsView {
         static let mediumSizeRows = 3
         static let largeSizeRows = 7
 
-        static let titleBottomPadding: CGFloat = 8.0
+        static let verticalPadding: CGFloat = 6
     }
 }

@@ -15,5 +15,5 @@ struct GroupedViewData {
 
     let statsURL: URL?
 
-    let lastUpdateText: String
+    let lastUpdate: Date
 }

@@ -26,12 +26,14 @@ struct StatsWidgetsView: View {
                 case .systemSmall:
                     SingleStatView(viewData: viewData)
                         .widgetURL(viewData.statsURL)
-                        .padding()
+                        .padding(.horizontal)
+                        .padding(.vertical, 12)
 
                 case .systemMedium:
                     MultiStatsView(viewData: viewData)
                         .widgetURL(viewData.statsURL)
-                        .padding()
+                        .padding(.horizontal)
+                        .padding(.vertical, 12)
 
                 default:
                     Text("View is unavailable")
@@ -66,7 +68,7 @@ private extension StatsWidgetsView {
                                    lowerRightTitle: LocalizableStrings.commentsTitle,
                                    lowerRightValue: todayWidgetData.stats.comments,
                                    statsURL: todayWidgetData.statsURL,
-                                   lastUpdateText: todayWidgetData.lastUpdateText)
+                                   lastUpdate: todayWidgetData.date)
         }
 
         if let allTimeWidgetData = widgetData as? HomeWidgetAllTimeData {
@@ -82,7 +84,7 @@ private extension StatsWidgetsView {
                                    lowerRightTitle: LocalizableStrings.bestViewsTitle,
                                    lowerRightValue: allTimeWidgetData.stats.bestViews,
                                    statsURL: allTimeWidgetData.statsURL,
-                                   lastUpdateText: allTimeWidgetData.lastUpdateText)
+                                   lastUpdate: allTimeWidgetData.date)
         }
         return nil
     }
@@ -95,7 +97,7 @@ private extension StatsWidgetsView {
                             siteName: thisWeekWidgetData.siteName,
                             items: thisWeekWidgetData.stats.days,
                             statsURL: thisWeekWidgetData.statsURL,
-                            lastUpdateText: thisWeekWidgetData.lastUpdateText)
+                            lastUpdate: thisWeekWidgetData.date)
     }
 }
 

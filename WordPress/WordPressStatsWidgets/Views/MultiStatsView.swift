@@ -23,11 +23,9 @@
                            lowerValue: viewData.lowerRightValue)
                 Spacer()
             }
-
             Spacer()
-            Text(viewData.lastUpdateText)
-                .font(.caption)
-                .foregroundColor(.secondary)
+
+            LastUpdateIndicator(lastUpdate: viewData.lastUpdate)
         }
     }
 
@@ -38,7 +36,6 @@
                             lowerValue: Int) -> some View {
         VStack(alignment: .leading) {
             VerticalCard(title: upperTitle, value: upperValue, largeText: false)
-            Spacer()
             VerticalCard(title: lowerTitle, value: lowerValue, largeText: false)
         }
     }
