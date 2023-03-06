@@ -37,6 +37,10 @@ enum LocalizableStrings {
                                                value: "Posts",
                                                comment: "Title of posts label in all time widget")
 
+    static let updateIndicatorLabel = AppLocalizedString("widget.updated.label",
+                                                         value: "Updated:",
+                                                         comment: "Last update indicator label for widgets")
+
     static let bestViewsTitle = AppLocalizedString("widget.alltime.bestviews.label",
                                                    value: "Best views ever",
                                                    comment: "Title of best views ever label in all time widget")

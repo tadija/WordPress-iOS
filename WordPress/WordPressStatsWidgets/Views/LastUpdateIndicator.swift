@@ -12,10 +12,9 @@ struct LastUpdateIndicator: View {
     }
 
     private var lastUpdateText: String {
-        /// - TODO: localize label later
-        let label = "Updated"
+        let label = LocalizableStrings.updateIndicatorLabel
         let value = lastUpdateFormatted
-        return "\(label): \(value)"
+        return "\(label) \(value)"
     }
 
     private var lastUpdateFormatted: String {
