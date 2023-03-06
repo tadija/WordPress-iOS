@@ -22,20 +22,11 @@ struct SiteListProvider<T: HomeWidgetData>: IntentTimelineProvider {
     }
 
     func getSnapshot(for configuration: SelectSiteIntent, in context: Context, completion: @escaping (StatsWidgetEntry) -> Void) {
-
-        guard let site = configuration.site,
-              let siteIdentifier = site.identifier,
-              let widgetData = widgetData(for: siteIdentifier) else {
-
-            if let siteID = defaultSiteID, let content = T.read()?[siteID] {
-                completion(.siteSelected(content, context))
-            } else {
-                completion(.siteSelected(placeholderContent, context))
-            }
-            return
+        if let widgetData = cachedWidgetData(configuration) {
+            completion(.siteSelected(widgetData, context))
+        } else {
+            completion(.siteSelected(placeholderContent, context))
         }
-
-        completion(.siteSelected(widgetData, context))
     }
 
     func getTimeline(for configuration: SelectSiteIntent, in context: Context, completion: @escaping (Timeline<StatsWidgetEntry>) -> Void) {
@@ -47,7 +38,7 @@ struct SiteListProvider<T: HomeWidgetData>: IntentTimelineProvider {
             completion(Timeline(entries: [.disabled(widgetKind)], policy: .never))
             return
         }
-        guard let defaultSiteID = defaultSiteID else {
+        guard defaultSiteID != nil else {
             let loggedIn = defaults.bool(forKey: AppConfiguration.Widget.Stats.userDefaultsLoggedInKey)
 
             if loggedIn {
@@ -58,7 +49,7 @@ struct SiteListProvider<T: HomeWidgetData>: IntentTimelineProvider {
             return
         }
 
-        guard let widgetData = widgetData(for: configuration, defaultSiteID: defaultSiteID) else {
+        guard let widgetData = cachedWidgetData(configuration) else {
             completion(Timeline(entries: [.noData(widgetKind)], policy: .never))
             return
         }
@@ -104,22 +95,25 @@ private extension SiteListProvider {
     /// Using defaultSiteID if both of these cases.
     /// - Parameters:
     ///   - configuration: Configuration of the Widget Site Selection Intent
-    ///   - defaultSiteID: ID of the default site in the account
     /// - Returns: Widget data
-    func widgetData(for configuration: SelectSiteIntent, defaultSiteID: Int) -> T? {
+    func cachedWidgetData(_ configuration: SelectSiteIntent) -> T? {
+        var siteID: Int?
 
-        /// If configuration.site.identifier has value but there's no widgetData, it means that this identifier comes from previously logged in account
-        return widgetData(for: configuration.site?.identifier ?? String(defaultSiteID))
-            ?? widgetData(for: String(defaultSiteID))
-    }
+        if let siteIdentifier = configuration.site?.identifier, let siteIdentifierInt = Int(siteIdentifier) {
+            /// - Note: If `config.site?.identifier` has value but there's no widget data,
+            /// it means that this identifier comes from a previously logged in account
+            siteID = siteIdentifierInt
+        } else {
+            if let defaultSiteID {
+                siteID = defaultSiteID
+            }
+        }
 
-    func widgetData(for siteID: String) -> T? {
-        /// - TODO: we should not really be needing to do this conversion.  Maybe we can evaluate a better mechanism for site identification.
-        guard let siteID = Int(siteID) else {
+        guard let data = T.read(), let siteID else {
             return nil
         }
 
-        return T.read()?[siteID]
+        return data[siteID]
     }
 }
 
