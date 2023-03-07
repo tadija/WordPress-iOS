@@ -93,27 +93,28 @@ private extension SiteListProvider {
     /// Configuration.site is nil until IntentHandler is initialized.
     /// Configuration.site can have old value after logging in with a different account. No way to reset configuration when the user logs out.
     /// Using defaultSiteID if both of these cases.
+    ///
     /// - Parameters:
     ///   - configuration: Configuration of the Widget Site Selection Intent
     /// - Returns: Widget data
+    ///
     func cachedWidgetData(_ configuration: SelectSiteIntent) -> T? {
-        var siteID: Int?
+        let allData = T.read()
+
+        var siteData: T?
+        var defaultData: T?
 
         if let siteIdentifier = configuration.site?.identifier, let siteIdentifierInt = Int(siteIdentifier) {
-            /// - Note: If `config.site?.identifier` has value but there's no widget data,
-            /// it means that this identifier comes from a previously logged in account
-            siteID = siteIdentifierInt
-        } else {
-            if let defaultSiteID {
-                siteID = defaultSiteID
-            }
+            siteData = allData?[siteIdentifierInt]
         }
 
-        guard let data = T.read(), let siteID else {
-            return nil
+        if let defaultSiteID {
+            defaultData = allData?[defaultSiteID]
         }
 
-        return data[siteID]
+        /// - Note: If `config.site?.identifier` has value but there's no widget data,
+        /// it means that this identifier comes from a previously logged in account
+        return siteData ?? defaultData
     }
 }
 
